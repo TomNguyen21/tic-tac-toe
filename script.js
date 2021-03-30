@@ -2,7 +2,9 @@
 We store our game status element here to allow us to more easily
 use it later on
 */
-var statusDisplay = document.querySelector('.game--status');
+let statusDisplay = document.querySelector('.game--status');
+let firstScoreDisplay = document.querySelector('.game--1score');
+let secondScoreDisplay = document.querySelector('.game--2score')
 /*
 Here we declare some variables that we will use to track the
 game state throught the game.
@@ -10,30 +12,41 @@ game state throught the game.
 /*
 We will use gameActive to pause the game in case of an end scenario
 */
-var gameActive = true;
+let gameActive = true;
 /*
 We will store our current player here, so we know whos turn
 */
-var currentPlayer = "X";
+let currentPlayer = "X";
+/*
+We will store game scores here, so that we can keep track of the score
+*/
+let xScore = 0;
+let oScore = 0;
 /*
 We will store our current game state here, the form of empty strings in an array
  will allow us to easily track played cells and validate the game state later on
 */
-var gameState = ["", "", "", "", "", "", "", "", ""];
+let gameState = ["", "", "", "", "", "", "", "", ""];
 /*
 Here we have declared some messages we will display to the user during the game.
 Since we have some dynamic factors in those messages, namely the current player,
 we have declared them as functions, so that the actual message gets created with
 current data every time we need it.
 */
-var winningMessage = () => `Player ${currentPlayer} has won!`;
-var drawMessage = () => `Game ended in a draw!`;
-var currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
+let winningMessage = () => `Player ${currentPlayer} has won!`;
+let drawMessage = () => `Game ended in a draw!`;
+let currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
+/*
+Here we declare the scores to display
+*/
+let player1Score = () => `Player One: ${xScore}`;
+let player2Score = () => `Player Two: ${oScore}`;
 /*
 We set the inital message to let the players know whose turn it is
 */
 statusDisplay.innerHTML = currentPlayerTurn();
-
+firstScoreDisplay.innerHTML = player1Score();
+secondScoreDisplay.innerHTML = player2Score();
 
 function handlePlayerChange() {
   currentPlayer = currentPlayer === "X" ? "O" : "X";
@@ -67,6 +80,13 @@ function handleResultValidation() {
   }
 if (roundWon) {
       statusDisplay.innerHTML = winningMessage();
+      if (currentPlayer === "X") {
+        xScore++;
+        firstScoreDisplay.innerHTML = player1Score();
+      } else {
+        oScore++;
+        secondScoreDisplay.innerHTML = player2Score();
+      }
       gameActive = false;
       return;
   }
@@ -88,8 +108,8 @@ and that there are still moves to be played, so we continue by changing the curr
 }
 
 function handleCellClick(e) {
-  var clickedCell = e.target;
-  var clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+  let clickedCell = e.target;
+  let clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
   if (gameState[clickedCellIndex] !== "" || !gameActive) {
     return;
   }
