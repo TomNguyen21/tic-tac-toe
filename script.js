@@ -119,7 +119,7 @@ function handleCellClick(e) {
 
 function handleRestartGame() {
   gameActive = true;
-  currentPlayer = "X";
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
   gameState = ["", "", "", "", "", "", "", "", ""];
   statusDisplay.innerHTML = currentPlayerTurn();
   document.querySelectorAll('.cell')
@@ -135,7 +135,9 @@ as well as update the user interface to reflect the played move
 }
 function handleResetScore() {
   xScore = 0;
+  firstScoreDisplay.innerHTML = player1Score();
   oScore = 0;
+  secondScoreDisplay.innerHTML = player2Score();
   return;
 }
 /*
