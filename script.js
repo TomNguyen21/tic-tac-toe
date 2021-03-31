@@ -126,16 +126,22 @@ function handleRestartGame() {
   .forEach(cell => cell.innerHTML = "");
 }
 function handleCellPlayed(clickedCell, clickedCellIndex) {
-  /*
-  We update our internal game state to reflect the played move,
-  as well as update the user interface to reflect the played move
-  */
-      gameState[clickedCellIndex] = currentPlayer;
-      clickedCell.innerHTML = currentPlayer;
-  }
+/*
+We update our internal game state to reflect the played move,
+as well as update the user interface to reflect the played move
+*/
+    gameState[clickedCellIndex] = currentPlayer;
+    clickedCell.innerHTML = currentPlayer;
+}
+function handleResetScore() {
+  xScore = 0;
+  oScore = 0;
+  return;
+}
 /*
 And finally we add our event listeners to the actual game cells, as well as our
 restart button
 */
 document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
 document.querySelector('.game--restart').addEventListener('click', handleRestartGame);
+document.querySelector('.game--reset').addEventListener('click', handleResetScore);
